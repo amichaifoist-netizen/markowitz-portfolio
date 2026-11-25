@@ -834,7 +834,7 @@ def inject_rtl_css():
 
 
 # ==========================================
-# חלק 3: סרטון הדרכה, חזית יעילה ומנוע הסבר מרקוביץ
+# חלק 3: סרטון הדרכה, מדריך אפיון, חזית יעילה ומנוע הסבר
 # ==========================================
 def render_video_guide(expanded=False):
     with st.expander("🎬 הדרכה מהירה (60 שניות): איך משתמשים בתיק-טק?", expanded=expanded):
@@ -851,7 +851,73 @@ def render_video_guide(expanded=False):
             with open(video_file_path, "rb") as video_file:
                 st.video(video_file.read())
         else:
-            st.warning(f"לא נמצא קובץ וידאו בתיקייה: {BASE_DIR}")
+            st.markdown("#### 4 צעדים פשוטים לבניית תיק השקעות חכם:")
+            c1, c2, c3, c4 = st.columns(4)
+            with c1:
+                st.markdown(
+                    "<div class='guide-step'><b>1. בחרו מסלול</b><br>משקיע מתחיל, מנוסה, תלמיד או מורה — המערכת מתאימה את השפה והכלים אליכם.</div>",
+                    unsafe_allow_html=True,
+                )
+            with c2:
+                st.markdown(
+                    "<div class='guide-step'><b>2. בחרו נכסים וסכום</b><br>בחרו מדדים, מניות, זהב או אג\"ח מהרשימה בעברית, והגדירו סכום פתיחה והפקדה חודשית.</div>",
+                    unsafe_allow_html=True,
+                )
+            with c3:
+                st.markdown(
+                    "<div class='guide-step'><b>3. לחצו על 'חשב תיק'</b><br>האלגוריתם (מודל מרקוביץ) יחשב עבורכם את החלוקה המאוזנת ביותר בין תשואה לסיכון.</div>",
+                    unsafe_allow_html=True,
+                )
+            with c4:
+                st.markdown(
+                    "<div class='guide-step'><b>4. בדקו במכונת הזמן</b><br>ראו איך התיק שלכם היה שורד את משבר הקורונה (2020) או האינפלציה (2022) מול מדד השוק.</div>",
+                    unsafe_allow_html=True,
+                )
+
+
+def render_system_spec_guide():
+    with st.expander("📖 מדריך למשתמש ואפיון המערכת: מה ההבדל בין המסלולים ואיך זה עובד?"):
+        st.markdown(
+            "מערכת **תיק-טק (Tik-Tak)** נבנתה כדי להנגיש בניית תיקי השקעות וניהול סיכונים לכל רמת ידע. "
+            "לכל משתמש מותאמת סביבת עבודה ייעודית:"
+        )
+        spec_df = pd.DataFrame(
+            [
+                {
+                    "המסלול": "משקיע מתחיל",
+                    "למי מיועד?": "מי שעושה צעדים ראשונים ללא רקע פיננסי",
+                    "כלים מרכזיים": "שאלון התאמת סיכון (3 שאלות), בחירת נכסים בעברית, הסברים בגובה העיניים",
+                    "שליטה במודל": "אוטומטית (המערכת מתאימה את רמת הזהירות לפי השאלון)",
+                },
+                {
+                    "המסלול": "משקיע מנוסה / סטודנט",
+                    "למי מיועד?": "משקיעים פעילים, סטודנטים לכלכלה/הנדסה וחובבי נתונים",
+                    "כלים מרכזיים": "גרף החזית היעילה (Efficient Frontier), ניתוח מתאמים, עמלות מסחר",
+                    "שליטה במודל": "מלאה — שליטה במקדם שנאת סיכון (γ), תקרת משקל לנכס ועמלות",
+                },
+                {
+                    "המסלול": "תלמיד",
+                    "למי מיועד?": "תלמידי תיכון בשיעורי אוריינות פיננסית וכלכלה",
+                    "כלים מרכזיים": "3 אתגרי למידה אינטראקטיביים (Quests), מכונת זמן ודוח הגשה למורה",
+                    "שליטה במודל": "מודרכת עם מילון מושגים ומשוב בזמן אמת על כל אתגר",
+                },
+                {
+                    "המסלול": "מורה",
+                    "למי מיועד?": "צוותי הוראה ומנחי סדנאות פיננסיות",
+                    "כלים מרכזיים": "מערך שיעור מובנה ל-45 דק', שאלות לדיון, לוח מעקב כיתתי וייצוא משובים",
+                    "שליטה במודל": "מלאה + גישה לדוחות הכיתה וגיבוי נתונים ל-CSV",
+                },
+            ]
+        )
+        st.dataframe(spec_df, use_container_width=True, hide_index=True)
+
+        st.markdown("#### 4 מנועי הליבה של המערכת:")
+        st.markdown(
+            "- **מנוע אופטימיזציה (מודל מרקוביץ):** מחשב מתמטית את חלוקת האחוזים שממקסמת תשואה ביחס לסיכון, ומשווה אותה לחלוקה שווה ($1/N$).\n"
+            "- **סימולציית הפקדות (DCA):** מדמה השקעה ראשונית יחד עם הפקדה חודשית קבועה לאורך השנים.\n"
+            "- **מכונת זמן פיננסית:** בודקת איך התיק שבניתם היה מתמודד במשברים היסטוריים (קורונה 2020, אינפלציה 2022) מול מדד S&P 500.\n"
+            "- **מעבדת ניסויים וארנק מעקב:** מאפשרת להרכיב תמהיל ידני משלכם ולקנות אותו בתיק וירטואלי למעקב מול מחירי הבורסה."
+        )
 
 
 def render_footer():
@@ -1026,6 +1092,7 @@ def render_login_screen():
     st.markdown("### בניית תיק השקעות חכם, ניהול סיכונים ולמידה פיננסית — בפשטות ובמהירות.")
 
     render_video_guide(expanded=True)
+    render_system_spec_guide()
     st.markdown("---")
 
     col_demo, col_auth = st.columns([1, 1])
@@ -1089,6 +1156,7 @@ def render_login_screen():
 def render_role_landing(username):
     st.title(f"שלום {username}, ברוכים הבאים לתיק-טק")
     render_video_guide(expanded=False)
+    render_system_spec_guide()
     st.markdown("### בחרו את המסלול המתאים לכם כדי להתחיל:")
     st.caption("תוכלו להחליף מסלול בכל רגע דרך התפריט הצדדי.")
 
@@ -1686,15 +1754,21 @@ def render_results_hub(snap, username, balance, initial_investment, monthly_inve
             max_value=float(balance),
             value=float(min(initial_investment, balance)),
         )
+
+        if st.session_state.get("purchase_success_msg"):
+            st.success(st.session_state.pop("purchase_success_msg"))
+            st.balloons()
+
         if st.button("שמור וקנה לתיק המעקב", type="primary"):
             prices = snap["last_prices"].reindex(snap["tickers"])
             spent = execute_virtual_trade(username, prices, snap["opt_weights"], trade_budget)
-            st.success(
+            updated_balance = get_user_balance(username)
+            st.session_state["purchase_success_msg"] = (
                 f"התיק נשמר בהצלחה! הושקעו {spent:,.2f} ₪. "
-                f"יתרה פנויה מעודכנת: {balance - spent:,.2f} ₪. "
+                f"יתרה פנויה מעודכנת: {updated_balance:,.2f} ₪. "
                 "עברו ללשונית 'התיק הווירטואלי שלי' לצפייה בביצועים."
             )
-            st.balloons()
+            st.rerun()
 
 
 def render_wallet(username, balance):
@@ -1903,6 +1977,7 @@ def main():
     st.title(f"תיק-טק — {role_info['title']}")
     st.markdown(role_info["desc"])
     render_video_guide(expanded=False)
+    render_system_spec_guide()
 
     balance = get_user_balance(username)
     st.info(f"שלום **{username}** | יתרה זמינה בארנק הסימולציה: **{balance:,.2f} ₪**")
